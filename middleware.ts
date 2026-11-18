@@ -18,14 +18,22 @@ function pickLocale(req: NextRequest): Locale {
 }
 
 export function middleware(req: NextRequest) {
-  const { pathname, search } = req.nextUrl;
-  const first = pathname.split("/")[1];
-  if (isLocale(first)) return NextResponse.next();
+  try {
+    const { pathname, search } = req.nextUrl;
+    const first = pathname.split("/")[1];
+    if (isLocale(first)) return NextResponse.next();
 
-  const url = req.nextUrl.clone();
-  url.pathname = `/${pickLocale(req)}${pathname === "/" ? "" : pathname}`;
-  url.search = search;
-  return NextResponse.redirect(url);
+    const url = req.nextUrl.clone();
+    url.pathname = `/${pickLocale(req)}${pathname === "/" ? "" : pathname}`;
+    url.search = search;
+    return NextResponse.redirect(url);
+  } catch {
+    // Ante cualquier fallo inesperado (header malformado, etc.), no tirar
+    // un 500: redirigir al idioma por defecto es mejor que romper el sitio.
+    const url = req.nextUrl.clone();
+    url.pathname = `/${defaultLocale}`;
+    return NextResponse.redirect(url);
+  }
 }
 
 export const config = {

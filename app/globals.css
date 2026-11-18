@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #050505;
+  --ink-2: #0c0c0c;
+  --ink-3: #181818;
+  --bone: #f5f5f5;
+  --blood: #d10b19;
+  --blood-hot: #ff1728;
+  --nav-h: 76px;
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--nav-h);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-ink text-bone font-sans antialiased;
+    overflow-x: clip;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--blood);
+    color: var(--bone);
+  }
+  :focus-visible {
+    outline: 1px solid var(--blood-hot);
+    outline-offset: 3px;
+  }
+  img,
+  video {
+    display: block;
+  }
+  input,
+  textarea,
+  select {
+    font-size: 16px; /* evita el zoom automático en iOS */
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-[1680px] px-4 sm:px-6 md:px-10 lg:px-14;
+  }
+  .label {
+    @apply font-sans text-[10px] font-medium uppercase tracking-label text-bone-muted sm:text-[11px];
+  }
+  .label-red {
+    @apply font-sans text-[10px] font-semibold uppercase tracking-label text-blood-hot sm:text-[11px];
+  }
+  .display {
+    @apply font-display uppercase;
+  }
+  .hairline {
+    @apply h-px w-full bg-white/10;
+  }
+  .btn {
+    @apply relative inline-flex items-center justify-center gap-3 overflow-hidden px-6 py-4 font-sans text-[11px] font-semibold uppercase tracking-[0.28em] transition-colors duration-500 ease-out;
+  }
+  .btn-red {
+    @apply btn bg-blood text-bone hover:bg-blood-hot;
+  }
+  .btn-ghost {
+    @apply btn border border-white/25 text-bone hover:border-bone hover:bg-bone hover:text-ink;
+  }
+  .field {
+    @apply w-full border-0 border-b border-white/15 bg-transparent px-0 py-3 text-bone placeholder:text-bone-dim transition-colors focus:border-blood-hot focus:outline-none focus:ring-0;
+  }
+  .field-label {
+    @apply mb-1 block text-[10px] font-medium uppercase tracking-[0.28em] text-bone-muted;
+  }
+}
+
+@layer utilities {
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(245, 245, 245, 0.55);
+  }
+  .text-outline-red {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--blood-hot);
+  }
+  .writing-vertical {
+    writing-mode: vertical-rl;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
+
+/* Grano de película global — muy sutil, sin coste de JS */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Preloader ya visto en esta sesión: oculto desde el primer pintado */
+html[data-intro="seen"] [data-preloader] {
+  display: none !important;
+}
+
+/* Distorsión sutil del logotipo (capas desfasadas por clip-path) */
+.glitch {
+  position: relative;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.glitch::before {
+  color: var(--blood-hot);
+  mix-blend-mode: screen;
+  animation: glitchA 2.6s steps(1) infinite;
+}
+.glitch::after {
+  color: #f5f5f5;
+  animation: glitchB 2.6s steps(1) infinite;
+}
+@keyframes glitchA {
+  0%, 12%, 16%, 58%, 62%, 100% { clip-path: inset(100% 0 0 0); transform: none; }
+  13% { clip-path: inset(18% 0 62% 0); transform: translate(-5px, 0); }
+  15% { clip-path: inset(64% 0 12% 0); transform: translate(4px, 0); }
+  60% { clip-path: inset(40% 0 44% 0); transform: translate(-3px, 0); }
+}
+@keyframes glitchB {
+  0%, 30%, 33%, 80%, 83%, 100% { clip-path: inset(100% 0 0 0); transform: none; }
+  31% { clip-path: inset(72% 0 8% 0); transform: translate(6px, 0); }
+  81% { clip-path: inset(8% 0 80% 0); transform: translate(-4px, 0); }
+}
+
+/* El cursor nativo se oculta sólo cuando el cursor custom está activo */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

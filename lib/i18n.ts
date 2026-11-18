@@ -22,6 +22,20 @@ export const l = (es: string, en: string, pt: string): L => ({ es, en, pt });
 
 export const isLocale = (v: string | undefined | null): v is Locale => !!v && (locales as readonly string[]).includes(v);
 
+/** Elige idioma: cookie (elección previa del visitante) → header Accept-Language del navegador → español. */
+export function pickLocale(acceptLanguage: string, cookieValue?: string): Locale {
+  if (isLocale(cookieValue)) return cookieValue;
+  const prefs = acceptLanguage
+    .split(",")
+    .map((part) => {
+      const [tag, q] = part.trim().split(";q=");
+      return { lang: tag.toLowerCase().slice(0, 2), q: q ? parseFloat(q) : 1 };
+    })
+    .sort((a, b) => b.q - a.q);
+  for (const p of prefs) if ((locales as readonly string[]).includes(p.lang)) return p.lang as Locale;
+  return defaultLocale;
+}
+
 /** Resuelve un texto traducible (o devuelve el string tal cual). */
 export function tr(v: L | string, lang: Locale): string {
   return typeof v === "string" ? v : v[lang] ?? v[defaultLocale];

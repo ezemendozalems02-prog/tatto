@@ -35,9 +35,8 @@ export default function WorldwideClient({ dots, stops, width, height }: Props) {
     <section id="worldwide" className="relative overflow-hidden bg-ink-800 py-28 md:py-44">
       <div className="container-x">
         <SectionHead
-          index="05"
-          label="International — Worldwide artist"
-          title={["Worldwide.", { text: "One artist.", className: "text-outline" }, { text: "Different worlds.", className: "text-outline" }]}
+          label={t.worldwide.label}
+          title={[t.worldwide.title[0], { text: t.worldwide.title[1], className: "text-outline" }, { text: t.worldwide.title[2], className: "text-outline" }]}
           titleClassName="text-huge"
         />
 

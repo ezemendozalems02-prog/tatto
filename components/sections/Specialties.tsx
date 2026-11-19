@@ -22,15 +22,14 @@ const layout = [
   { wrap: "md:col-span-4 md:col-start-9 md:mt-32", aspect: "aspect-[4/5]", offset: "" },
 ];
 
-export default function Specialties({ headIndex = "03" }: { headIndex?: string }) {
+export default function Specialties() {
   const { t } = useLocale();
   return (
     <section id="body-mod" className="relative bg-ink-800 py-28 md:py-44">
       <div className="container-x">
         <SectionHead
-          index={headIndex}
-          label="Specialties"
-          title={["Body Modification", { text: "The art of", className: "text-outline" }, { text: "transformation.", className: "text-outline" }]}
+          label={t.specialties.label}
+          title={[t.specialties.title[0], { text: t.specialties.title[1], className: "text-outline" }, { text: t.specialties.title[2], className: "text-outline" }]}
           aside={
             <p className="text-sm leading-relaxed text-bone-muted">
               {t.specialties.aside}
@@ -53,7 +52,7 @@ function Card({ p, l, index }: { p: Procedure; l: (typeof layout)[number]; index
   const { t, tr, href } = useLocale();
   return (
     <Reveal className={cn("relative", l.wrap)} delay={0.05}>
-      <Link href={href(`/body-modification/${p.slug}`)} className="group block" data-cursor="Explore" aria-label={`${p.name} — ${t.specialties.explore}`}>
+      <Link href={href(`/body-modification/${p.slug}`)} className="group block" data-cursor={t.specialties.explore} aria-label={`${tr(p.name)} — ${t.specialties.explore}`}>
         <div className={cn("relative overflow-hidden", l.aspect)}>
           <div className="absolute inset-0 transition-transform duration-[1.4s] ease-out group-hover:scale-[1.06]">
             <Photo media={p.cover} sizes="(min-width:768px) 50vw, 100vw" />
@@ -69,7 +68,7 @@ function Card({ p, l, index }: { p: Procedure; l: (typeof layout)[number]; index
             </div>
             <div className="overflow-hidden">
               <p className="display mt-1 text-2xl leading-none text-bone md:translate-y-[110%] md:text-4xl md:transition-transform md:duration-700 md:ease-out md:group-hover:translate-y-0">
-                {p.fullName}
+                {tr(p.fullName)}
               </p>
             </div>
           </div>
@@ -88,7 +87,7 @@ function Card({ p, l, index }: { p: Procedure; l: (typeof layout)[number]; index
 
         <div className="mt-6 grid grid-cols-[1fr_auto] items-start gap-6">
           <div>
-            <h3 className="display text-[clamp(2rem,3.6vw,3.4rem)] leading-[0.9]">{p.name}</h3>
+            <h3 className="display text-[clamp(2rem,3.6vw,3.4rem)] leading-[0.9]">{tr(p.name)}</h3>
             <p className="mt-3 max-w-md text-sm leading-relaxed text-bone-muted">{tr(p.short)}</p>
           </div>
           <span className="mt-1 flex items-center gap-2 border-b border-white/30 pb-1 text-[10px] font-semibold uppercase tracking-[0.28em] transition-colors duration-300 group-hover:border-blood-hot group-hover:text-blood-hot">

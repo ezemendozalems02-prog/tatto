@@ -8,7 +8,7 @@ import { InstagramIcon, WhatsAppIcon } from "@/components/icons/Brand";
 import { useUI } from "@/components/layout/UIProvider";
 import Photo from "@/components/ui/Photo";
 import { media } from "@/data/media";
-import { site } from "@/data/site";
+import { pages, site } from "@/data/site";
 import { waLink } from "@/lib/whatsapp";
 import { useLocale } from "@/components/layout/LocaleProvider";
 
@@ -33,16 +33,15 @@ export default function Contact() {
 
       <div className="container-x relative">
         <div className="mb-10 flex items-center gap-4 md:mb-16">
-          <span className="label-red">11</span>
           <DrawLine className="w-10 md:w-16" />
-          <span className="label">Contact — Let&apos;s connect</span>
+          <span className="label">{t.contact.label}</span>
         </div>
 
-        <SplitText className="display text-giant" lines={["Let's create", { text: "something", className: "text-outline pl-[10vw]" }, { text: "different.", className: "text-blood-hot" }]} stagger={0.07} />
+        <SplitText className="display text-giant" lines={[t.contact.title[0], { text: t.contact.title[1], className: "text-outline pl-[10vw]" }, { text: t.contact.title[2], className: "text-blood-hot" }]} stagger={0.07} />
 
         <div className="mt-16 flex flex-col gap-3 sm:flex-row md:mt-20">
-          <Link href={href("/#booking")} className="btn-red">Book a consultation <ArrowUpRight size={14} /></Link>
-          <button type="button" onClick={openInvite} className="btn-ghost">Invite FROZZ to your event</button>
+          <Link href={href(pages.booking)} className="btn-red">{t.contact.book} <ArrowUpRight size={14} /></Link>
+          <button type="button" onClick={openInvite} className="btn-ghost">{t.contact.invite}</button>
         </div>
 
         <div className="mt-20 grid border-t border-white/10 sm:grid-cols-2 lg:grid-cols-5 md:mt-28">

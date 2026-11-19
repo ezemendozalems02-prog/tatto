@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { bookingConfig } from "@/data/booking";
-import { dayStatus, formatShort, monthGrid, monthName, nextAvailable, startOfDay, toKey, weekdayLong, weekdaysShort } from "@/lib/availability";
+import { dayStatus, monthGrid, monthName, nextAvailable, startOfDay, toKey, weekdayLong, weekdaysShort } from "@/lib/availability";
 import { cn } from "@/lib/utils";
 import { useLocale } from "@/components/layout/LocaleProvider";
 
@@ -26,10 +26,9 @@ export default function Calendar({ value, onChange }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const suggestions = useMemo(() => (today ? nextAvailable(5, today) : []), [today]);
   const weekdays = useMemo(() => weekdaysShort(lang), [lang]);
 
-  if (!today || !view) return <div className="h-[420px] animate-pulse bg-white/[0.02]" />;
+  if (!today || !view) return <div className="h-[340px] animate-pulse bg-white/[0.02]" />;
 
   const cells = monthGrid(view.y, view.m);
   const minIdx = today.getFullYear() * 12 + today.getMonth();
@@ -45,23 +44,23 @@ export default function Calendar({ value, onChange }: Props) {
   };
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[1fr_240px] lg:gap-10">
+    <div className="mx-auto max-w-md lg:mx-0">
       <div>
-        <div className="flex items-center justify-between border-b border-white/10 pb-4">
-          <button type="button" onClick={() => shift(-1)} disabled={!canPrev} className="flex h-11 w-11 items-center justify-center border border-white/15 transition-colors hover:border-blood-hot disabled:cursor-not-allowed disabled:opacity-25 disabled:hover:border-white/15" aria-label={c.prevMonth}>
+        <div className="flex items-center justify-between border-b border-white/10 pb-3">
+          <button type="button" onClick={() => shift(-1)} disabled={!canPrev} className="flex h-9 w-9 items-center justify-center border border-white/15 transition-colors hover:border-blood-hot disabled:cursor-not-allowed disabled:opacity-25 disabled:hover:border-white/15" aria-label={c.prevMonth}>
             <ChevronLeft size={18} strokeWidth={1.4} />
           </button>
           <AnimatePresence mode="wait" initial={false}>
-            <motion.p key={`${view.y}-${view.m}`} initial={{ opacity: 0, y: dir * 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -dir * 10 }} transition={{ duration: 0.25 }} className="display text-3xl tracking-wide md:text-4xl" aria-live="polite">
+            <motion.p key={`${view.y}-${view.m}`} initial={{ opacity: 0, y: dir * 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -dir * 10 }} transition={{ duration: 0.25 }} className="display text-2xl tracking-wide" aria-live="polite">
               {month} <span className="text-bone/35">{view.y}</span>
             </motion.p>
           </AnimatePresence>
-          <button type="button" onClick={() => shift(1)} disabled={!canNext} className="flex h-11 w-11 items-center justify-center border border-white/15 transition-colors hover:border-blood-hot disabled:cursor-not-allowed disabled:opacity-25 disabled:hover:border-white/15" aria-label={c.nextMonth}>
+          <button type="button" onClick={() => shift(1)} disabled={!canNext} className="flex h-9 w-9 items-center justify-center border border-white/15 transition-colors hover:border-blood-hot disabled:cursor-not-allowed disabled:opacity-25 disabled:hover:border-white/15" aria-label={c.nextMonth}>
             <ChevronRight size={18} strokeWidth={1.4} />
           </button>
         </div>
 
-        <div className="mt-4 grid grid-cols-7 text-center">
+        <div className="mt-3 grid grid-cols-7 text-center">
           {weekdays.map((d) => (
             <span key={d} className="py-2 text-[10px] font-medium uppercase tracking-[0.2em] text-bone-dim">
               {d}
@@ -95,7 +94,7 @@ export default function Calendar({ value, onChange }: Props) {
                   aria-pressed={!!selected}
                   aria-label={`${weekdayLong(d, lang)} ${d.getDate()} — ${avail ? c.yes : st === "full" ? c.full : c.no}`}
                   className={cn(
-                    "relative flex aspect-square items-center justify-center text-sm transition-colors duration-200 md:text-base",
+                    "relative flex h-10 items-center justify-center text-sm transition-colors duration-200 sm:h-11",
                     selected && "bg-blood font-semibold text-bone",
                     !selected && avail && "text-bone hover:bg-white/[0.06] hover:text-blood-hot",
                     !avail && "cursor-not-allowed text-bone/15",
@@ -111,7 +110,7 @@ export default function Calendar({ value, onChange }: Props) {
           </motion.div>
         </AnimatePresence>
 
-        <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[10px] uppercase tracking-[0.2em] text-bone-muted">
+        <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-[10px] uppercase tracking-[0.2em] text-bone-muted">
           <span className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-blood-hot" /> {c.available}
           </span>
@@ -121,32 +120,6 @@ export default function Calendar({ value, onChange }: Props) {
           <span className="flex items-center gap-2">
             <span className="text-bone/20 line-through">00</span> {c.unavailable}
           </span>
-        </div>
-      </div>
-
-      <div>
-        <p className="label-red">{c.nextDays}</p>
-        <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-1">
-          {suggestions.map((d) => {
-            const selected = value && toKey(value) === toKey(d);
-            return (
-              <button
-                key={toKey(d)}
-                type="button"
-                onClick={() => {
-                  onChange(d);
-                  setView({ y: d.getFullYear(), m: d.getMonth() });
-                }}
-                className={cn("flex items-center justify-between border px-4 py-3 text-left transition-colors", selected ? "border-blood bg-blood/15" : "border-white/10 hover:border-white/40")}
-              >
-                <span>
-                  <span className="block text-[10px] uppercase tracking-[0.2em] text-bone-muted">{weekdayLong(d, lang)}</span>
-                  <span className="display text-xl uppercase">{formatShort(d, lang)}</span>
-                </span>
-                <ChevronRight size={14} className="text-bone/40" />
-              </button>
-            );
-          })}
         </div>
       </div>
     </div>

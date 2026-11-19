@@ -83,7 +83,7 @@ export default function Photo({ media, className, sizes = "100vw", priority, sho
       {showHint && (
         <div className="absolute bottom-5 left-5 right-5">
           <p className="max-w-[24ch] text-[9px] uppercase leading-relaxed tracking-[0.28em] text-white/35">
-            <span className="text-blood-hot">● </span>Photo · {media.hint}
+            <span className="text-blood-hot">● </span>Foto · {media.hint}
           </p>
         </div>
       )}

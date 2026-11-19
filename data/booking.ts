@@ -1,3 +1,5 @@
+import { l } from "@/lib/i18n";
+
 /**
  * SISTEMA DE RESERVAS — CONFIGURACIÓN DEMO
  *
@@ -43,6 +45,5 @@ export const bookingConfig = {
 
 export const otherConsultation = {
   slug: "other",
-  name: "Other Consultation",
-  kicker: { es: "Otra consulta", en: "Other inquiry", pt: "Outra consulta" },
+  name: l("Otra consulta", "Other inquiry", "Outra consulta"),
 };

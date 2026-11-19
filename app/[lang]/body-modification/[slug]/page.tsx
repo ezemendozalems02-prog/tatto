@@ -8,7 +8,7 @@ import SplitText from "@/components/animations/SplitText";
 import { MaskReveal, Reveal } from "@/components/animations/Reveal";
 import { getProcedure, offeredProcedures } from "@/data/procedures";
 import { safety } from "@/data/content";
-import { site } from "@/data/site";
+import { pages, site } from "@/data/site";
 import { ui } from "@/data/i18n/ui";
 import { isLocale, localize, locales, tr } from "@/lib/i18n";
 import { languageAlternates } from "@/lib/seo";
@@ -23,11 +23,11 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { lang, slug } = await params;
   const p = getProcedure(slug);
   if (!p || !isLocale(lang)) return {};
-  const title = `${p.fullName} — ${tr(p.kicker, lang)}`;
+  const title = `${tr(p.fullName, lang)} — ${tr(p.kicker, lang)}`;
   const path = `/body-modification/${p.slug}`;
   return {
     title,
-    description: `${tr(p.short, lang)} ${ui[lang].meta.procedureSuffix} ${site.artist}, ${site.tagline}.`,
+    description: `${tr(p.short, lang)} ${ui[lang].meta.procedureSuffix} ${site.artist}, ${ui[lang].brand.tagline}.`,
     alternates: { canonical: `/${lang}${path}`, languages: languageAlternates(path) },
     openGraph: { title: `${title} | ${site.brand}`, description: tr(p.short, lang), url: `/${lang}${path}` },
   };
@@ -43,12 +43,12 @@ export default async function ProcedurePage({ params }: { params: Promise<Params
   const idx = offeredProcedures.findIndex((x) => x.slug === p.slug);
   const prev = offeredProcedures[(idx - 1 + offeredProcedures.length) % offeredProcedures.length];
   const next = offeredProcedures[(idx + 1) % offeredProcedures.length];
-  const bookHref = localize(`/?procedure=${p.slug}#booking`, lang);
+  const bookHref = localize(`${pages.booking}?procedure=${p.slug}`, lang);
 
   const ld = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: p.fullName,
+    name: L(p.fullName),
     alternateName: L(p.kicker),
     description: L(p.short),
     provider: { "@id": `${site.url}/#business` },
@@ -69,11 +69,11 @@ export default async function ProcedurePage({ params }: { params: Promise<Params
         </div>
 
         <div className="container-x relative flex min-h-[calc(100svh-9rem)] flex-col justify-end pb-16 md:justify-center md:pb-0">
-          <Link href={localize("/#body-mod", lang)} className="mb-10 inline-flex items-center gap-2 self-start text-[11px] uppercase tracking-[0.24em] text-bone-muted transition-colors hover:text-bone">
+          <Link href={localize(pages.bodyMod, lang)} className="mb-10 inline-flex items-center gap-2 self-start text-[11px] uppercase tracking-[0.24em] text-bone-muted transition-colors hover:text-bone">
             <ArrowLeft size={14} /> {t.back}
           </Link>
           <p className="display text-[clamp(5rem,16vw,14rem)] leading-[0.8] text-outline">{p.number}</p>
-          <SplitText as="h1" className="display -mt-4 text-giant md:-mt-8" lines={[p.name]} />
+          <SplitText as="h1" className="display -mt-4 text-giant md:-mt-8" lines={[L(p.name)]} />
           <p className="label-red mt-6">{L(p.kicker)}</p>
           <p className="mt-6 max-w-xl font-serif text-2xl leading-snug text-bone/90 md:text-3xl">{L(p.short)}</p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
@@ -118,7 +118,7 @@ export default async function ProcedurePage({ params }: { params: Promise<Params
       <section className="bg-ink-800 py-24 md:py-36" aria-label={t.galleryAria}>
         <div className="container-x">
           <div className="mb-12 flex items-end justify-between gap-6">
-            <h2 className="display text-huge">Gallery</h2>
+            <h2 className="display text-huge">{t.gallery}</h2>
             <p className="label hidden md:block">
               {t.real} · {site.contact.instagram.handle}
             </p>
@@ -147,7 +147,7 @@ export default async function ProcedurePage({ params }: { params: Promise<Params
       <section className="bg-ink py-24 md:py-36">
         <div className="container-x">
           <p className="label mb-6">{t.s2}</p>
-          <h2 className="display text-huge">How it works</h2>
+          <h2 className="display text-huge">{t.howItWorks}</h2>
           <ol className="mt-14 grid gap-px bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-5">
             {p.process.map((s, i) => (
               <li key={i} className="bg-ink p-6 md:p-8">
@@ -225,9 +225,9 @@ export default async function ProcedurePage({ params }: { params: Promise<Params
       <section className="relative overflow-hidden border-t border-white/[0.07] bg-ink py-24 md:py-36">
         <div className="container-x text-center">
           <p className="label-red">{t.ctaKicker}</p>
-          <h2 className="display mx-auto mt-6 max-w-5xl text-giant">Request a consultation</h2>
+          <h2 className="display mx-auto mt-6 max-w-5xl text-giant">{t.ctaTitle}</h2>
           <Link href={bookHref} className="btn-red mt-12">
-            {t.request} · {p.name} <ArrowUpRight size={14} />
+            {t.request} · {L(p.name)} <ArrowUpRight size={14} />
           </Link>
         </div>
       </section>
@@ -238,13 +238,13 @@ export default async function ProcedurePage({ params }: { params: Promise<Params
           <span className="label flex items-center gap-2">
             <ArrowLeft size={12} /> {ui[lang].common.prev}
           </span>
-          <span className="display mt-3 block text-4xl transition-colors group-hover:text-blood-hot md:text-6xl">{prev.name}</span>
+          <span className="display mt-3 block text-4xl transition-colors group-hover:text-blood-hot md:text-6xl">{L(prev.name)}</span>
         </Link>
         <Link href={localize(`/body-modification/${next.slug}`, lang)} className="group p-6 text-right transition-colors hover:bg-white/[0.02] md:p-12">
           <span className="label flex items-center justify-end gap-2">
             {ui[lang].common.next} <ArrowRight size={12} />
           </span>
-          <span className="display mt-3 block text-4xl transition-colors group-hover:text-blood-hot md:text-6xl">{next.name}</span>
+          <span className="display mt-3 block text-4xl transition-colors group-hover:text-blood-hot md:text-6xl">{L(next.name)}</span>
         </Link>
       </nav>
     </article>

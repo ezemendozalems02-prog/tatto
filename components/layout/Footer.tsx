@@ -4,7 +4,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { useState } from "react";
-import { site } from "@/data/site";
+import { pages, site } from "@/data/site";
 import { referenceConfig, references } from "@/data/references";
 import { waLink } from "@/lib/whatsapp";
 import { useUI } from "./UIProvider";
@@ -20,10 +20,10 @@ export default function Footer() {
   const links = [
     { label: "Instagram", href: site.contact.instagram.url, external: true },
     { label: "WhatsApp", href: waLink(), external: true },
-    { label: "Booking", href: href("/#booking") },
-    { label: "Portfolio", href: href("/#works") },
-    { label: "Events", href: href("/#events") },
-    { label: "Contact", href: href("/#contact") },
+    { label: t.nav.booking, href: href(pages.booking) },
+    { label: t.nav.works, href: href(pages.works) },
+    { label: t.nav.tour, href: href(pages.tour) },
+    { label: t.nav.contact, href: href(pages.contact) },
   ];
 
   const refs = Object.values(references);
@@ -34,11 +34,11 @@ export default function Footer() {
         <div className="grid gap-12 md:grid-cols-12">
           <div className="md:col-span-5">
             <p className="display text-3xl">FROZZ BODYART</p>
-            <p className="label mt-3">{site.tagline}</p>
-            <p className="mt-8 max-w-sm font-serif text-xl italic leading-snug text-bone/70">&ldquo;{site.claim}&rdquo;</p>
+            <p className="label mt-3">{t.brand.tagline}</p>
+            <p className="mt-8 max-w-sm font-serif text-xl italic leading-snug text-bone/70">&ldquo;{t.brand.claim}&rdquo;</p>
           </div>
 
-          <nav className="md:col-span-4" aria-label="Footer">
+          <nav className="md:col-span-4" aria-label={t.common.menu}>
             <ul className="grid grid-cols-2 gap-x-8 gap-y-3">
               {links.map((l) => (
                 <li key={l.label}>
@@ -62,11 +62,11 @@ export default function Footer() {
           </nav>
 
           <div className="flex flex-col items-start gap-3 md:col-span-3 md:items-end">
-            <Link href={href("/#booking")} className="btn-red w-full md:w-auto">
-              Book a consultation
+            <Link href={href(pages.booking)} className="btn-red w-full md:w-auto">
+              {t.contact.book}
             </Link>
             <button type="button" onClick={openInvite} className="btn-ghost w-full md:w-auto">
-              Invite FROZZ
+              {t.contact.inviteShort}
             </button>
           </div>
         </div>
@@ -118,7 +118,7 @@ export default function Footer() {
         <span>
           © {year} FROZZ BODYART · {site.artist}
         </span>
-        <span>{site.base.label}</span>
+        <span>{site.base.country} / {t.hero.worldwide}</span>
       </div>
     </footer>
   );

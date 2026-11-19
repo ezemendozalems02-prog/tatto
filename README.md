@@ -12,6 +12,20 @@ npm run build      # build de producción
 npm run typecheck  # chequeo de TypeScript
 ```
 
+## Páginas
+
+| Página | Ruta | Contenido |
+| --- | --- | --- |
+| Inicio | `/es` | Hero, especialidades y accesos al resto del sitio (solo lo esencial) |
+| Artista | `/es/artista` | Manifiesto, biografía y recorrido, testimonios, prensa |
+| Procedimientos | `/es/body-modification` | Especialidades + seguridad y cuidados (cada una tiene su página) |
+| Trabajos | `/es/trabajos` | Portfolio con filtros |
+| Giras y eventos | `/es/giras` | Mapa de ciudades, conferencias y talleres |
+| Reservas | `/es/reservas` | Turno de simulación en un solo formulario |
+| Contacto | `/es/contacto` | Instagram, WhatsApp, invitaciones |
+
+El menú se arma desde `nav` en `data/site.ts`.
+
 ## Qué editar y dónde
 
 | Qué | Archivo |
@@ -24,17 +38,17 @@ npm run typecheck  # chequeo de TypeScript
 | Conferencias, workshops, eventos | `data/events.ts` |
 | Disponibilidad y horarios de la reserva DEMO | `data/booking.ts` |
 | Manifesto, About, Journey, Safety, testimonios, prensa | `data/content.ts` |
-| Textos de interfaz (botones, formularios, etiquetas) por idioma | `data/i18n/ui.ts` |
+| Textos de interfaz (menú, títulos de sección, botones, formularios) por idioma | `data/i18n/ui.ts` |
 | Imágenes de referencia y sus créditos | `data/references.ts` · `data/references.json` |
 
 ## Idiomas
 
-El sitio está en **español, inglés y portugués**: `/es`, `/en`, `/pt`.
+El sitio está en **español** (idioma principal), con versiones en **inglés y portugués**: `/es`, `/en`, `/pt`.
 
 - Al entrar a `/`, `app/page.tsx` elige el idioma según el navegador (o la última elección del visitante, guardada en una cookie).
 - El selector ES / EN / PT está en la navbar, el menú mobile y el footer, y conserva la sección actual.
 - Los textos traducibles usan `l("español", "english", "português")`. TypeScript marca cualquier traducción faltante.
-- Los titulares editoriales (FROZZ, "Selected Works", "Your body…") quedan en inglés en todos los idiomas: son la voz de la marca.
+- Todo el texto visible, incluidos los titulares y los nombres de los procedimientos, está traducido. Solo la marca (FROZZ BODYART) queda igual.
 - Para agregar un idioma: sumarlo en `lib/i18n.ts`, completar su diccionario en `data/i18n/ui.ts` y los campos `l(...)` de `/data`.
 
 ## Imágenes de referencia (temporales)

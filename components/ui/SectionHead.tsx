@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 type Line = string | { text: string; className?: string };
 
-/** Encabezado editorial común: índice + etiqueta + título partido. */
+/** Encabezado editorial común: etiqueta + título partido. */
 export default function SectionHead({
   index,
   label,
@@ -13,7 +13,7 @@ export default function SectionHead({
   className = "",
   titleClassName = "text-giant",
 }: {
-  index: string;
+  index?: string;
   label: string;
   title: Line[];
   aside?: ReactNode;
@@ -23,7 +23,7 @@ export default function SectionHead({
   return (
     <header className={className}>
       <div className="mb-8 flex items-center gap-4 md:mb-12">
-        <span className="label-red">{index}</span>
+        {index && <span className="label-red">{index}</span>}
         <DrawLine className="w-10 md:w-16" />
         <span className="label">{label}</span>
       </div>

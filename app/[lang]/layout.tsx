@@ -11,7 +11,7 @@ import Cursor from "@/components/layout/Cursor";
 import WhatsAppFloat from "@/components/layout/WhatsAppFloat";
 import { INTRO_KEY } from "@/lib/constants";
 import { languageAlternates } from "@/lib/seo";
-import { isLocale, locales, ogLocale, type Locale } from "@/lib/i18n";
+import { isLocale, locales, ogLocale, tr, type Locale } from "@/lib/i18n";
 import { site } from "@/data/site";
 import { offeredProcedures } from "@/data/procedures";
 import { ui } from "@/data/i18n/ui";
@@ -73,7 +73,7 @@ function jsonLd(lang: Locale) {
         url: site.url,
         sameAs: [site.contact.instagram.url],
         worksFor: { "@id": `${site.url}/#business` },
-        knowsAbout: ["Body Modification", ...offeredProcedures.map((p) => p.fullName)],
+        knowsAbout: ["Body Modification", ...offeredProcedures.map((p) => tr(p.fullName, lang))],
       },
       {
         "@type": "HealthAndBeautyBusiness",
@@ -89,7 +89,7 @@ function jsonLd(lang: Locale) {
         availableLanguage: ["es", "en", "pt"],
         makesOffer: offeredProcedures.map((p) => ({
           "@type": "Offer",
-          itemOffered: { "@type": "Service", name: p.fullName, url: `${site.url}/${lang}/body-modification/${p.slug}` },
+          itemOffered: { "@type": "Service", name: tr(p.fullName, lang), url: `${site.url}/${lang}/body-modification/${p.slug}` },
         })),
       },
       { "@type": "WebSite", "@id": `${site.url}/#website`, url: site.url, name: site.brand, inLanguage: lang },

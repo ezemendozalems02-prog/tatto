@@ -15,8 +15,8 @@ import { l, type L } from "@/lib/i18n";
 export type Procedure = {
   slug: string;
   number: string;
-  name: string;
-  fullName: string;
+  name: L;
+  fullName: L;
   kicker: L;
   short: L;
   intro: L[];
@@ -93,8 +93,8 @@ export const procedures: Procedure[] = [
   {
     slug: "tongue-split",
     number: "01",
-    name: "Tongue Split",
-    fullName: "Tongue Splitting",
+    name: l("Lengua bífida", "Tongue Split", "Língua bifurcada"),
+    fullName: l("Bifurcación de lengua", "Tongue Splitting", "Bifurcação de língua"),
     kicker: l("Bifurcación de lengua", "Tongue bifurcation", "Bifurcação de língua"),
     short: l(
       "División de la lengua en dos partes independientes. Una de las modificaciones más icónicas de la cultura.",
@@ -217,8 +217,8 @@ export const procedures: Procedure[] = [
   {
     slug: "implants",
     number: "02",
-    name: "Implants",
-    fullName: "Subdermal Implants",
+    name: l("Implantes", "Implants", "Implantes"),
+    fullName: l("Implantes subdérmicos", "Subdermal Implants", "Implantes subdérmicos"),
     kicker: l("Implantes subdérmicos", "Subdermal implants", "Implantes subdérmicos"),
     short: l(
       "Formas y relieves bajo la piel. Escultura corporal en tres dimensiones.",
@@ -329,8 +329,8 @@ export const procedures: Procedure[] = [
   {
     slug: "scarification",
     number: "03",
-    name: "Scarification",
-    fullName: "Scarification Art",
+    name: l("Escarificación", "Scarification", "Escarificação"),
+    fullName: l("Arte de escarificación", "Scarification Art", "Arte de escarificação"),
     kicker: l("Escarificación", "Scarification", "Escarificação"),
     short: l(
       "Diseños que la propia piel transforma en relieve. Arte que se completa con la cicatrización.",
@@ -427,8 +427,8 @@ export const procedures: Procedure[] = [
   {
     slug: "ear-pointing",
     number: "04",
-    name: "Ear Pointing",
-    fullName: "Ear Pointing",
+    name: l("Orejas en punta", "Ear Pointing", "Orelhas pontudas"),
+    fullName: l("Modelado de orejas en punta", "Ear Pointing", "Modelagem de orelhas pontudas"),
     kicker: l("Orejas en punta", "Pointed ears", "Orelhas pontudas"),
     short: l(
       "Modificación estética de la forma de la oreja hacia un contorno en punta.",
@@ -496,8 +496,8 @@ export const procedures: Procedure[] = [
   {
     slug: "lobuloplasty",
     number: "05",
-    name: "Lobuloplasty",
-    fullName: "Lobe Reconstruction",
+    name: l("Lobuloplastia", "Lobuloplasty", "Lobuloplastia"),
+    fullName: l("Reconstrucción de lóbulo", "Lobe Reconstruction", "Reconstrução de lóbulo"),
     kicker: l("Lobuloplastia", "Lobe reconstruction", "Lobuloplastia"),
     short: l(
       "Reconstrucción y modificación estética del lóbulo de la oreja.",
@@ -564,8 +564,8 @@ export const procedures: Procedure[] = [
   {
     slug: "tattoo-body-art",
     number: "06",
-    name: "Tattoo & Body Art",
-    fullName: "Tattoo & Body Art",
+    name: l("Tatuaje y arte corporal", "Tattoo & Body Art", "Tatuagem e arte corporal"),
+    fullName: l("Tatuaje y arte corporal", "Tattoo & Body Art", "Tatuagem e arte corporal"),
     kicker: l("Tatuaje y arte corporal", "Tattoo and body art", "Tatuagem e arte corporal"),
     short: l(
       "Tatuaje y expresiones artísticas sobre la piel, dentro del universo FROZZ.",

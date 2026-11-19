@@ -17,9 +17,6 @@ export type BookingRequest = {
   dateLabel: string;
   time: string;
   name: string;
-  country: string;
-  city: string;
-  email: string;
   whatsapp: string;
   details: string;
 };
@@ -31,7 +28,7 @@ export function bookingMessage(r: BookingRequest, lang: Locale) {
   return blocks(
     m.hello,
     lines(`*${m.request}*`, `• ${m.procedure}: ${r.procedure}`, `• ${m.date}: ${r.dateLabel}`, `• ${m.time}: ${r.time}${hs ? " " + hs : ""}`),
-    lines(`*${m.data}*`, `• ${m.name}: ${r.name}`, `• ${m.location}: ${r.city}, ${r.country}`, `• ${m.email}: ${r.email}`, `• ${m.whatsapp}: ${r.whatsapp}`),
+    lines(`*${m.data}*`, `• ${m.name}: ${r.name}`, `• ${m.whatsapp}: ${r.whatsapp}`),
     r.details.trim() && lines(`*${m.details}*`, r.details.trim()),
     m.confirm,
   );

@@ -4,17 +4,22 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { nav, site } from "@/data/site";
+import { nav, pages, site } from "@/data/site";
 import { cn } from "@/lib/utils";
 import MobileMenu from "./MobileMenu";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useLocale } from "./LocaleProvider";
 import { useUI } from "./UIProvider";
 
+/** true si `pathname` es esa página o una subpágina suya. */
+export function isActive(pathname: string, lang: string, href: string) {
+  const full = href === "/" ? `/${lang}` : `/${lang}${href}`;
+  return href === "/" ? pathname === full : pathname === full || pathname.startsWith(`${full}/`);
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState("home");
   const pathname = usePathname();
   const { introDone } = useUI();
   const { lang, t, href } = useLocale();
@@ -26,21 +31,6 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  // Indicador de sección activa
-  useEffect(() => {
-    if (!isHome) return;
-    const ids = nav.map((n) => n.href.split("#")[1]);
-    const els = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => e.isIntersecting && setActive(e.target.id));
-      },
-      { rootMargin: "-45% 0px -50% 0px" },
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, [isHome]);
 
   const solid = scrolled || !isHome;
 
@@ -55,8 +45,8 @@ export default function Navbar() {
           solid ? "border-b border-white/[0.06] bg-ink/75 backdrop-blur-xl" : "border-b border-transparent",
         )}
       >
-        <nav className={cn("container-x flex items-center justify-between transition-[height] duration-500", solid ? "h-[64px]" : "h-[76px] md:h-[88px]")} aria-label="Main">
-          <Link href={href("/#home")} className="group flex items-baseline gap-2" aria-label={site.brand}>
+        <nav className={cn("container-x flex items-center justify-between transition-[height] duration-500", solid ? "h-[64px]" : "h-[76px] md:h-[88px]")} aria-label={t.common.menu}>
+          <Link href={href("/")} className="group flex items-baseline gap-2" aria-label={site.brand}>
             <span className="display text-2xl leading-none tracking-wide md:text-[28px]">FROZZ</span>
             <span className={cn("text-[9px] font-semibold uppercase tracking-[0.5em] text-bone-muted transition-all duration-500", solid ? "max-w-0 overflow-hidden opacity-0 md:max-w-[120px] md:opacity-100" : "max-w-[120px]")}>
               Bodyart
@@ -66,18 +56,18 @@ export default function Navbar() {
 
           <ul className="hidden items-center gap-1 xl:flex">
             {nav.map((item) => {
-              const id = item.href.split("#")[1];
-              const on = isHome && active === id;
+              const on = isActive(pathname, lang, item.href);
               return (
-                <li key={item.href}>
+                <li key={item.key}>
                   <Link
                     href={href(item.href)}
+                    aria-current={on ? "page" : undefined}
                     className={cn(
                       "relative px-3 py-2 text-[10.5px] font-medium uppercase tracking-[0.24em] transition-colors duration-300",
                       on ? "text-bone" : "text-bone/55 hover:text-bone",
                     )}
                   >
-                    {item.label}
+                    {t.nav[item.key]}
                     <AnimatePresence>
                       {on && (
                         <motion.span
@@ -95,8 +85,8 @@ export default function Navbar() {
 
           <div className="flex items-center gap-3">
             <LanguageSwitcher className="hidden md:flex" />
-            <Link href={href("/#booking")} className="btn-red hidden !px-5 !py-3 sm:inline-flex">
-              Book now
+            <Link href={href(pages.booking)} className="btn-red hidden !px-5 !py-3 sm:inline-flex">
+              {t.nav.book}
             </Link>
             <button
               type="button"

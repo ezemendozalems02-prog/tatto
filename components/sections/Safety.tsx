@@ -14,7 +14,7 @@ export default function Safety() {
   return (
     <section id="safety" className="relative bg-ink py-28 md:py-44">
       <div className="container-x">
-        <SectionHead index="08" label="Safety & Aftercare" title={["Art with", { text: "responsibility.", className: "text-outline" }]} />
+        <SectionHead label={t.safety.label} title={[t.safety.title[0], { text: t.safety.title[1], className: "text-outline" }]} />
 
         <div className="mt-16 grid gap-14 md:mt-24 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-4">
@@ -27,7 +27,7 @@ export default function Safety() {
                 <div className="mt-4 flex flex-wrap gap-2">
                   {offeredProcedures.map((p) => (
                     <Link key={p.slug} href={href(`/body-modification/${p.slug}#aftercare`)} className="group inline-flex items-center gap-1 border border-white/10 px-3 py-2 text-[11px] uppercase tracking-[0.16em] text-bone/70 transition-colors hover:border-blood-hot hover:text-bone">
-                      {p.name} <ArrowUpRight size={12} className="opacity-50 group-hover:opacity-100" />
+                      {tr(p.name)} <ArrowUpRight size={12} className="opacity-50 group-hover:opacity-100" />
                     </Link>
                   ))}
                 </div>

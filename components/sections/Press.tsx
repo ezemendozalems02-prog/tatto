@@ -17,7 +17,7 @@ export default function Press() {
   return (
     <section id="press" className="relative bg-ink py-28 md:py-44">
       <div className="container-x">
-        <SectionHead index="10" label="Press & Media" title={["Featured", { text: "/ Press /", className: "text-outline" }, "Media."]} titleClassName="text-huge" />
+        <SectionHead label={t.press.label} title={[t.press.title[0], { text: t.press.title[1], className: "text-outline" }, t.press.title[2]]} titleClassName="text-huge" />
 
         <div className="mt-16 grid gap-12 md:mt-24 lg:grid-cols-12 lg:gap-10">
           {/* Nota destacada estilo revista */}

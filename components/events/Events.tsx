@@ -19,13 +19,12 @@ export default function Events() {
     <section id="events" className="relative bg-ink py-28 md:py-44">
       <div className="container-x">
         <SectionHead
-          index="06"
-          label="Conferences & Workshops"
-          title={["Beyond", "the studio."]}
+          label={t.events.label}
+          title={[t.events.title[0], t.events.title[1]]}
           aside={
             <p className="display text-2xl leading-tight md:text-3xl">
-              Sharing knowledge.<br />
-              <span className="text-blood-hot">Building culture.</span>
+              {t.events.aside[0]}<br />
+              <span className="text-blood-hot">{t.events.aside[1]}</span>
             </p>
           }
         />
@@ -55,11 +54,11 @@ export default function Events() {
                 <div className="relative flex h-full flex-col justify-between p-6 md:p-10">
                   <div className="flex items-start justify-between">
                     <span className="display text-7xl leading-none text-outline md:text-8xl">{b.number}</span>
-                    {!b.cover.src && !b.cover.ref && <span className="max-w-[16ch] text-right text-[9px] uppercase tracking-[0.24em] text-white/30">● Photo · {b.cover.hint}</span>}
+                    {!b.cover.src && !b.cover.ref && <span className="max-w-[16ch] text-right text-[9px] uppercase tracking-[0.24em] text-white/30">● Foto · {b.cover.hint}</span>}
                   </div>
 
                   <div>
-                    <h3 className="display text-[clamp(2.4rem,4vw,4rem)] leading-[0.9]">{b.title}</h3>
+                    <h3 className="display text-[clamp(2.4rem,4vw,4rem)] leading-[0.9]">{tr(b.title)}</h3>
                     <p className="mt-4 max-w-md text-[15px] leading-relaxed text-bone/80">{tr(b.lead)}</p>
 
                     <div className={cn("grid transition-all duration-700 ease-out", on ? "lg:grid-rows-[1fr] lg:opacity-100" : "lg:grid-rows-[0fr] lg:opacity-0")}>
@@ -112,12 +111,12 @@ export default function Events() {
             type="button"
             onClick={openInvite}
             className="group relative flex w-full flex-col items-start gap-6 overflow-hidden border border-white/10 p-6 text-left transition-colors duration-500 hover:border-blood md:flex-row md:items-center md:justify-between md:p-12"
-            data-cursor="Invite"
+            data-cursor={t.common.invite}
           >
             <span className="absolute inset-0 origin-left scale-x-0 bg-blood transition-transform duration-700 ease-cine group-hover:scale-x-100" />
             <span className="relative">
               <span className="label block transition-colors group-hover:text-bone">{t.events.ctaKicker}</span>
-              <span className="display mt-3 block text-[clamp(2.2rem,6vw,5.5rem)] leading-[0.9]">Invite FROZZ to your event</span>
+              <span className="display mt-3 block text-[clamp(2.2rem,6vw,5.5rem)] leading-[0.9]">{t.events.cta}</span>
             </span>
             <span className="relative flex h-16 w-16 shrink-0 items-center justify-center border border-white/30 transition-all duration-500 group-hover:rotate-45 group-hover:border-bone md:h-24 md:w-24">
               <ArrowUpRight size={28} strokeWidth={1.2} />

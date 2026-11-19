@@ -17,14 +17,13 @@ export default function Manifesto() {
       <section id="manifesto" className="relative overflow-hidden bg-ink py-28 md:py-44">
         <div className="container-x">
           <div className="mb-10 flex items-center gap-4 md:mb-16">
-            <span className="label-red">01</span>
             <DrawLine className="w-10 md:w-16" />
-            <span className="label">Manifesto — The art behind the body</span>
+            <span className="label">{t.manifesto.label}</span>
           </div>
 
           <SplitText
             className="display text-giant"
-            lines={["Art is not", { text: "limited", className: "text-outline-red pl-[8vw]" }, "by the body."]}
+            lines={[t.manifesto.title[0], { text: t.manifesto.title[1], className: "text-outline-red pl-[8vw]" }, t.manifesto.title[2]]}
             stagger={0.08}
           />
 
@@ -58,7 +57,7 @@ export default function Manifesto() {
         </div>
 
         <span className="pointer-events-none absolute -right-[4vw] top-24 hidden select-none font-display text-[22vw] leading-none text-white/[0.02] lg:block" aria-hidden>
-          MANIFESTO
+          {t.manifesto.bg}
         </span>
       </section>
 
@@ -96,12 +95,13 @@ function Word({ children, progress, range }: { children: string; progress: Motio
 
 function FullQuote() {
   const ref = useRef<HTMLElement>(null);
+  const { lang, t, tr } = useLocale();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.2, 1.05, 1]);
   const x = useTransform(scrollYProgress, [0, 1], ["8%", "-8%"]);
 
   return (
-    <section ref={ref} className="relative flex min-h-[100svh] items-center overflow-hidden bg-ink" aria-label="Cita">
+    <section ref={ref} className="relative flex min-h-[100svh] items-center overflow-hidden bg-ink" aria-label={t.manifesto.quoteLabel}>
       <motion.div className="absolute inset-0" style={{ scale }}>
         <Photo media={media.manifestoFull} sizes="100vw" />
       </motion.div>
@@ -109,7 +109,7 @@ function FullQuote() {
       <div className="absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_50%,transparent,#050505_90%)]" />
 
       <motion.p className="display pointer-events-none absolute left-0 top-[12%] whitespace-nowrap text-[18vw] leading-none text-white/[0.04]" style={{ x }} aria-hidden>
-        Beyond the limits
+        {t.manifesto.quoteBg}
       </motion.p>
 
       <div className="container-x relative z-10 text-center">
@@ -119,11 +119,12 @@ function FullQuote() {
         <SplitText
           as="blockquote"
           className="mx-auto max-w-[16ch] font-serif text-[clamp(2.4rem,7vw,7rem)] italic leading-[1.02]"
-          lines={[manifesto.fullQuote]}
+          key={lang}
+          lines={[tr(manifesto.fullQuote)]}
           stagger={0.05}
         />
         <Reveal delay={0.6}>
-          <p className="label mt-10">FROZZ BODYART — Manifesto</p>
+          <p className="label mt-10">{t.manifesto.quoteLabel}</p>
         </Reveal>
       </div>
     </section>

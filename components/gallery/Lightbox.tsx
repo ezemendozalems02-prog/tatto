@@ -58,7 +58,7 @@ export default function Lightbox({ items, index, onClose, onIndex }: Props) {
           transition={{ duration: 0.45 }}
           role="dialog"
           aria-modal="true"
-          aria-label={item.title}
+          aria-label={tr(item.title)}
         >
           <div className="container-x flex h-[72px] shrink-0 items-center justify-between">
             <span className="display text-xl tabular-nums">
@@ -103,8 +103,8 @@ export default function Lightbox({ items, index, onClose, onIndex }: Props) {
 
           <div className="container-x flex shrink-0 flex-col gap-4 py-6 md:flex-row md:items-end md:justify-between md:py-8">
             <div>
-              <p className="label-red">{workFilters.find((f) => f.id === item.category)?.label}</p>
-              <h3 className="display mt-1 text-4xl leading-none md:text-5xl">{item.title}</h3>
+              <p className="label-red">{tr(workFilters.find((f) => f.id === item.category)?.label ?? "")}</p>
+              <h3 className="display mt-1 text-4xl leading-none md:text-5xl">{tr(item.title)}</h3>
               <p className="mt-2 max-w-xl text-sm text-bone-muted">{item.description ? tr(item.description) : t.works.pending}</p>
               {item.ref && !item.src && (
                 <p className="mt-2 text-[10px] uppercase tracking-[0.2em] text-bone-dim">

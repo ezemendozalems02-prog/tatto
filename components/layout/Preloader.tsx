@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useUI } from "./UIProvider";
+import { useLocale } from "./LocaleProvider";
 import { pad2 } from "@/lib/utils";
 
 import { INTRO_KEY } from "@/lib/constants";
@@ -19,6 +20,7 @@ const MIN_MS = 1700;
  */
 export default function Preloader() {
   const { setIntroDone } = useUI();
+  const { t } = useLocale();
   const [show, setShow] = useState(true);
   const [pct, setPct] = useState(0);
 
@@ -128,7 +130,7 @@ export default function Preloader() {
                 <span className="absolute inset-y-0 left-0 bg-blood-hot shadow-[0_0_12px_#ff1728]" style={{ width: `${pct}%` }} />
               </div>
               <div className="mt-3 flex items-center justify-between text-[10px] uppercase tracking-[0.3em] text-bone-muted">
-                <span>International Body Modification Artist</span>
+                <span>{t.brand.tagline}</span>
                 <span className="display text-base tracking-normal text-bone tabular-nums">{pct === 100 ? "100" : pad2(pct)}</span>
               </div>
             </div>

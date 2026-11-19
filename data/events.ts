@@ -31,7 +31,7 @@ export type EventItem = {
 export type EventBlock = {
   id: "conferences" | "workshops" | "international";
   number: string;
-  title: string;
+  title: L;
   lead: L;
   points: L[];
   cover: Media;
@@ -42,7 +42,7 @@ export const eventBlocks: EventBlock[] = [
   {
     id: "conferences",
     number: "01",
-    title: "Conferences",
+    title: l("Conferencias", "Conferences", "Palestras"),
     lead: l(
       "Charlas y presentaciones sobre body modification, proceso artístico, trayectoria y cultura.",
       "Talks and presentations on body modification, artistic process, career and culture.",
@@ -59,7 +59,7 @@ export const eventBlocks: EventBlock[] = [
   {
     id: "workshops",
     number: "02",
-    title: "Workshops",
+    title: l("Talleres", "Workshops", "Workshops"),
     lead: l(
       "Espacios de formación e intercambio profesional para artistas y estudios.",
       "Training and professional exchange for artists and studios.",
@@ -76,7 +76,7 @@ export const eventBlocks: EventBlock[] = [
   {
     id: "international",
     number: "03",
-    title: "International Events",
+    title: l("Eventos internacionales", "International Events", "Eventos internacionais"),
     lead: l(
       "Convenciones, exposiciones, encuentros y participaciones como guest artist.",
       "Conventions, exhibitions, gatherings and guest artist appearances.",

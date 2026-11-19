@@ -1,9 +1,9 @@
 import type { Media } from "./media";
 import { ref, type RefKey } from "./references";
-import type { L } from "@/lib/i18n";
+import { l, type L } from "@/lib/i18n";
 
 /**
- * PORTFOLIO — SELECTED WORKS
+ * PORTFOLIO — TRABAJOS SELECCIONADOS
  *
  * Cargar acá SOLO trabajos reales de Rou Viraca (Instagram @frozz_bodyart
  * o material propio). Cada ítem acepta foto (`src`) o video corto (`video`).
@@ -17,7 +17,7 @@ export type WorkCategory = "body-mod" | "tattoo" | "scarification" | "implants" 
 
 export type Work = Media & {
   id: string;
-  title: string;
+  title: L;
   category: WorkCategory;
   shape: "tall" | "portrait" | "wide" | "square";
   /** Descripción traducida. `null` = "a completar". */
@@ -25,16 +25,16 @@ export type Work = Media & {
   year?: string;
 };
 
-export const workFilters: { id: "all" | WorkCategory; label: string }[] = [
-  { id: "all", label: "All" },
-  { id: "body-mod", label: "Body Mod" },
-  { id: "tattoo", label: "Tattoo" },
-  { id: "scarification", label: "Scarification" },
-  { id: "implants", label: "Implants" },
-  { id: "other", label: "Other" },
+export const workFilters: { id: "all" | WorkCategory; label: L }[] = [
+  { id: "all", label: l("Todos", "All", "Todos") },
+  { id: "body-mod", label: l("Modificación", "Body Mod", "Modificação") },
+  { id: "tattoo", label: l("Tatuaje", "Tattoo", "Tatuagem") },
+  { id: "scarification", label: l("Escarificación", "Scarification", "Escarificação") },
+  { id: "implants", label: l("Implantes", "Implants", "Implantes") },
+  { id: "other", label: l("Otros", "Other", "Outros") },
 ];
 
-const w = (id: string, title: string, category: WorkCategory, shape: Work["shape"], hint: string, refKey?: RefKey): Work => ({
+const w = (id: string, title: L, category: WorkCategory, shape: Work["shape"], hint: string, refKey?: RefKey): Work => ({
   id,
   title,
   category,
@@ -47,16 +47,16 @@ const w = (id: string, title: string, category: WorkCategory, shape: Work["shape
 });
 
 export const works: Work[] = [
-  w("w01", "Tongue Split", "body-mod", "tall", "Tongue split · primer plano", "tongue-split-1"),
-  w("w02", "Scar Geometry", "scarification", "wide", "Escarificación · pieza horizontal", "scar-back"),
-  w("w03", "Subdermal Relief", "implants", "portrait", "Implante · perfil", "horn-implants"),
-  w("w04", "Ear Work", "body-mod", "square", "Ear pointing · detalle", "ear-procedure"),
-  w("w05", "Ink Study", "tattoo", "portrait", "Tatuaje · pieza vertical", "tattoo-catrina"),
-  w("w06", "Process", "other", "wide", "Video corto / backstage · horizontal", "session-dark"),
-  w("w07", "Healed", "scarification", "tall", "Escarificación cicatrizada · vertical", "scar-vine"),
-  w("w08", "Lobe Work", "body-mod", "square", "Lobuloplastia · resultado", "stretched-lobe"),
-  w("w09", "Dermal Form", "implants", "wide", "Implante · composición horizontal", "implant-beads"),
-  w("w10", "Blackwork", "tattoo", "tall", "Tatuaje · blackwork vertical", "face-skull-tattoo"),
-  w("w11", "Split Detail", "body-mod", "portrait", "Tongue split · movimiento", "tongue-split-2"),
-  w("w12", "Convention", "other", "square", "Evento / convención", "convention-crowd"),
+  w("w01", l("Lengua bífida", "Tongue Split", "Língua bifurcada"), "body-mod", "tall", "Tongue split · primer plano", "tongue-split-1"),
+  w("w02", l("Geometría en cicatriz", "Scar Geometry", "Geometria em cicatriz"), "scarification", "wide", "Escarificación · pieza horizontal", "scar-back"),
+  w("w03", l("Relieve subdérmico", "Subdermal Relief", "Relevo subdérmico"), "implants", "portrait", "Implante · perfil", "horn-implants"),
+  w("w04", l("Trabajo en oreja", "Ear Work", "Trabalho na orelha"), "body-mod", "square", "Ear pointing · detalle", "ear-procedure"),
+  w("w05", l("Estudio en tinta", "Ink Study", "Estudo em tinta"), "tattoo", "portrait", "Tatuaje · pieza vertical", "tattoo-catrina"),
+  w("w06", l("Proceso", "Process", "Processo"), "other", "wide", "Video corto / backstage · horizontal", "session-dark"),
+  w("w07", l("Cicatrizado", "Healed", "Cicatrizado"), "scarification", "tall", "Escarificación cicatrizada · vertical", "scar-vine"),
+  w("w08", l("Trabajo en lóbulo", "Lobe Work", "Trabalho no lóbulo"), "body-mod", "square", "Lobuloplastia · resultado", "stretched-lobe"),
+  w("w09", l("Forma dérmica", "Dermal Form", "Forma dérmica"), "implants", "wide", "Implante · composición horizontal", "implant-beads"),
+  w("w10", l("Blackwork", "Blackwork", "Blackwork"), "tattoo", "tall", "Tatuaje · blackwork vertical", "face-skull-tattoo"),
+  w("w11", l("Detalle de bífida", "Split Detail", "Detalhe da bifurcação"), "body-mod", "portrait", "Tongue split · movimiento", "tongue-split-2"),
+  w("w12", l("Convención", "Convention", "Convenção"), "other", "square", "Evento / convención", "convention-crowd"),
 ];

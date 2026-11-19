@@ -55,15 +55,20 @@ export const site = {
   ],
 } as const;
 
+/** Páginas del sitio. El texto de cada link está en data/i18n/ui.ts → nav. */
 export const nav = [
-  { label: "Home", href: "/#home" },
-  { label: "Artist", href: "/#artist" },
-  { label: "Body Mod", href: "/#body-mod" },
-  { label: "Works", href: "/#works" },
-  { label: "Worldwide", href: "/#worldwide" },
-  { label: "Events", href: "/#events" },
-  { label: "Booking", href: "/#booking" },
-  { label: "Contact", href: "/#contact" },
+  { key: "home", href: "/" },
+  { key: "artist", href: "/artista" },
+  { key: "bodyMod", href: "/body-modification" },
+  { key: "works", href: "/trabajos" },
+  { key: "tour", href: "/giras" },
+  { key: "booking", href: "/reservas" },
+  { key: "contact", href: "/contacto" },
 ] as const;
+
+export type NavKey = (typeof nav)[number]["key"];
+
+/** Ruta de cada página, para links internos: pages.booking → "/reservas". */
+export const pages = Object.fromEntries(nav.map((n) => [n.key, n.href])) as Record<NavKey, string>;
 
 export const estLabel = () => (site.established ? `EST. ${site.established}` : "EST. —");

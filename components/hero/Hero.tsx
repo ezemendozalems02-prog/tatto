@@ -8,7 +8,7 @@ import Photo from "@/components/ui/Photo";
 import SplitText from "@/components/animations/SplitText";
 import { useUI } from "@/components/layout/UIProvider";
 import { media } from "@/data/media";
-import { estLabel, site } from "@/data/site";
+import { estLabel, pages, site } from "@/data/site";
 import { useLocale } from "@/components/layout/LocaleProvider";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -16,7 +16,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { introDone } = useUI();
-  const { href } = useLocale();
+  const { t, href } = useLocale();
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const imgY = useTransform(scrollYProgress, [0, 1], reduce ? ["0%", "0%"] : ["0%", "22%"]);
@@ -50,7 +50,7 @@ export default function Hero() {
         <span className="absolute bottom-[18%] right-0 hidden h-[28%] w-[2px] bg-blood md:block" />
         {!media.hero.src && !media.hero.ref && (
           <p className="absolute right-5 top-28 max-w-[22ch] text-right text-[9px] uppercase leading-relaxed tracking-[0.28em] text-white/30 md:top-32">
-            <span className="text-blood-hot">●</span> Photo · {media.hero.hint}
+            <span className="text-blood-hot">●</span> Foto · {media.hero.hint}
           </p>
         )}
       </motion.div>
@@ -59,7 +59,7 @@ export default function Hero() {
       <motion.div className="container-x relative z-10 flex h-full flex-col justify-end pb-24 md:justify-center md:pb-0" style={{ y: titleY, opacity: fade }}>
         <motion.div {...appear(0.55)} className="mb-6 flex items-center gap-4 md:mb-10">
           <span className="h-px w-10 bg-blood md:w-16" />
-          <span className="label !text-bone/80">{site.tagline}</span>
+          <span className="label !text-bone/80">{t.brand.tagline}</span>
         </motion.div>
 
         <h1 className="display relative text-[27vw] leading-[0.78] md:text-mega" aria-label="FROZZ BODYART">
@@ -76,19 +76,19 @@ export default function Hero() {
 
         <div className="mt-8 flex flex-col gap-8 md:mt-12 lg:flex-row lg:items-end lg:gap-14">
           <motion.div {...appear(0.85)} className="max-w-sm">
-            <p className="font-serif text-2xl italic leading-tight text-bone md:text-3xl">&ldquo;{site.claim}&rdquo;</p>
+            <p className="font-serif text-2xl italic leading-tight text-bone md:text-3xl">&ldquo;{t.brand.claim}&rdquo;</p>
             <p className="mt-4 text-[13px] leading-relaxed text-bone-muted">
-              {site.artist} — Body Modification Artist.<br />
-              {site.base.label}.
+              {site.artist} — {t.hero.artistLine}.<br />
+              {site.base.country} / {t.hero.worldwide}.
             </p>
           </motion.div>
           <motion.div {...appear(1)} className="flex flex-col gap-3 sm:flex-row">
-            <Link href={href("/#works")} className="btn-ghost group whitespace-nowrap">
-              Explore my work
+            <Link href={href(pages.works)} className="btn-ghost group whitespace-nowrap">
+              {t.hero.explore}
               <ArrowRight size={14} className="transition-transform duration-500 group-hover:translate-x-1" />
             </Link>
-            <Link href={href("/#booking")} className="btn-red group whitespace-nowrap">
-              Book an experience
+            <Link href={href(pages.booking)} className="btn-red group whitespace-nowrap">
+              {t.hero.book}
             </Link>
           </motion.div>
         </div>
@@ -102,13 +102,18 @@ export default function Hero() {
         transition={{ duration: 1.2, delay: 1.1 }}
       >
         <p className="writing-vertical rotate-180 whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.5em] text-bone/50">
-          Body Modification <span className="text-blood-hot">/</span> Body Art <span className="text-blood-hot">/</span> Worldwide <span className="text-blood-hot">/</span> {estLabel()}
+          {t.hero.vertical.map((v) => (
+            <span key={v}>
+              {v} <span className="text-blood-hot">/</span>{" "}
+            </span>
+          ))}
+          {estLabel()}
         </p>
       </motion.div>
 
       {/* SCROLL INDICATOR */}
       <motion.a
-        href="#manifesto"
+        href="#intro"
         className="absolute bottom-6 left-4 z-10 flex items-center gap-4 sm:left-6 md:bottom-10 md:left-10 lg:left-14"
         {...appear(1.3)}
       >
@@ -116,14 +121,14 @@ export default function Hero() {
           <span className="absolute inset-0 bg-blood-hot animate-scrollLine" />
         </span>
         <span className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.32em] text-bone/70">
-          Scroll to discover <ArrowDown size={12} />
+          {t.hero.scroll} <ArrowDown size={12} />
         </span>
       </motion.a>
 
       {/* COORDENADAS — detalle editorial */}
       <motion.p className="absolute bottom-10 right-24 z-10 hidden text-right text-[10px] uppercase leading-relaxed tracking-[0.3em] text-bone/40 lg:block" {...appear(1.4)}>
         34.6037° S — 58.3816° W<br />
-        {site.base.city} · Worldwide
+        {site.base.city} · {t.hero.worldwide}
       </motion.p>
     </section>
   );

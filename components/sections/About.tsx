@@ -13,14 +13,13 @@ import { cn } from "@/lib/utils";
 import { useLocale } from "@/components/layout/LocaleProvider";
 
 export default function About() {
-  const { tr } = useLocale();
+  const { t, tr } = useLocale();
   return (
     <section id="artist" className="relative bg-ink py-28 md:py-44">
       <div className="container-x">
         <div className="mb-10 flex items-center gap-4 md:mb-16">
-          <span className="label-red">02</span>
           <DrawLine className="w-10 md:w-16" />
-          <span className="label">About — The artist</span>
+          <span className="label">{t.about.label}</span>
         </div>
 
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-10">
@@ -43,7 +42,7 @@ export default function About() {
 
           {/* Texto */}
           <div className="lg:col-span-5 lg:col-start-8 lg:pt-10">
-            <SplitText className="display text-huge" lines={["The artist", { text: "behind", className: "text-blood-hot" }, "FROZZ."]} />
+            <SplitText className="display text-huge" lines={[t.about.title[0], { text: t.about.title[1], className: "text-blood-hot" }, t.about.title[2]]} />
 
             <Reveal delay={0.2}>
               <p className="mt-10 font-serif text-2xl leading-snug text-bone md:text-[1.9rem]">{tr(about.lead)}</p>
@@ -69,7 +68,7 @@ export default function About() {
             <Reveal className="mt-10 flex items-center gap-4">
               <span className="display text-xl">{site.artist}</span>
               <span className="h-px flex-1 bg-white/10" />
-              <span className="label">{site.base.label}</span>
+              <span className="label">{site.base.country} / {t.hero.worldwide}</span>
             </Reveal>
           </div>
         </div>
@@ -88,7 +87,7 @@ function Journey() {
   return (
     <div className="mt-32 md:mt-52">
       <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <SplitText className="display text-huge" lines={["The", { text: "Journey.", className: "text-outline" }]} />
+        <SplitText className="display text-huge" lines={[t.about.journey[0], { text: t.about.journey[1], className: "text-outline" }]} />
         <Reveal>
           <p className="max-w-xs text-sm leading-relaxed text-bone-muted">{t.about.journeyNote}</p>
         </Reveal>

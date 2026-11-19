@@ -51,9 +51,8 @@ export default function Testimonials() {
     <section id="testimonials" className="relative overflow-hidden bg-ink-800 py-28 md:py-44">
       <div className="container-x">
         <SectionHead
-          index="07"
-          label="Testimonials — Experiences"
-          title={["Real people.", { text: "Real experiences.", className: "text-outline" }]}
+          label={t.testimonials.label}
+          title={[t.testimonials.title[0], { text: t.testimonials.title[1], className: "text-outline" }]}
           titleClassName="text-huge"
           aside={
             hasPlaceholders ? (
@@ -74,11 +73,11 @@ export default function Testimonials() {
             dragConstraints={{ left: -max, right: 0 }}
             dragElastic={0.08}
             onDragEnd={onDragEnd}
-            data-cursor="Drag"
+            data-cursor={t.common.drag}
           >
             {testimonials.map((item, i) => (
               <article key={i} className="relative flex min-h-[420px] w-[86vw] shrink-0 select-none flex-col justify-between border border-white/[0.08] bg-ink p-7 sm:w-[60vw] md:p-10 lg:w-[38vw] xl:w-[30vw]">
-                {item.placeholder && <span className="absolute right-5 top-5 border border-white/15 px-2 py-0.5 text-[9px] uppercase tracking-[0.24em] text-bone-dim">Placeholder</span>}
+                {item.placeholder && <span className="absolute right-5 top-5 border border-white/15 px-2 py-0.5 text-[9px] uppercase tracking-[0.24em] text-bone-dim">{t.testimonials.placeholderTitle}</span>}
                 <div>
                   <span className="font-serif text-7xl leading-none text-blood">&ldquo;</span>
                   <p className="mt-2 font-serif text-2xl leading-snug text-bone/90 md:text-[1.7rem]">{tr(item.text)}</p>
@@ -93,7 +92,7 @@ export default function Testimonials() {
                     <p className="display text-xl leading-none">{item.name}</p>
                     <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-bone-muted">{item.city}</p>
                   </div>
-                  <p className="label-red">{item.procedure}</p>
+                  <p className="label-red">{tr(item.procedure)}</p>
                 </div>
               </article>
             ))}

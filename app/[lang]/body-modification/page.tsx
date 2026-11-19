@@ -1,23 +1,20 @@
-import type { Metadata } from "next";
 import Specialties from "@/components/sections/Specialties";
-import { isLocale } from "@/lib/i18n";
+import Safety from "@/components/sections/Safety";
 import { ui } from "@/data/i18n/ui";
-import { languageAlternates } from "@/lib/seo";
+import { pages } from "@/data/site";
+import { isLocale } from "@/lib/i18n";
+import { pageMetadata } from "@/lib/seo";
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
-  if (!isLocale(lang)) return {};
-  return {
-    title: ui[lang].meta.bodyModTitle,
-    description: ui[lang].meta.bodyModDescription,
-    alternates: { canonical: `/${lang}/body-modification`, languages: languageAlternates("/body-modification") },
-  };
+  return isLocale(lang) ? pageMetadata(lang, pages.bodyMod, ui[lang].meta.bodyModTitle, ui[lang].meta.bodyModDescription) : {};
 }
 
 export default function BodyModificationIndex() {
   return (
     <div className="pt-16">
-      <Specialties headIndex="—" />
+      <Specialties />
+      <Safety />
     </div>
   );
 }

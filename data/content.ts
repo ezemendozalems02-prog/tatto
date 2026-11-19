@@ -32,7 +32,7 @@ export const manifesto = {
     },
     { n: "III", text: l("Sin decisión propia no hay modificación.", "Without your own decision, there is no modification.", "Sem decisão própria não há modificação.") },
   ],
-  fullQuote: "Transformation is a decision. Art is how you carry it.",
+  fullQuote: l("La transformación es una decisión. El arte es cómo la llevás.", "Transformation is a decision. Art is how you carry it.", "A transformação é uma decisão. A arte é como você a leva."),
 };
 
 export const about = {
@@ -85,7 +85,7 @@ export const journey: JourneyMilestone[] = [
   {
     year: "[AÑO]",
     title: l("Conferencias", "Conferences", "Palestras"),
-    text: l("[A COMPLETAR] Charlas y workshops realizados.", "[TO COMPLETE] Talks and workshops given.", "[A COMPLETAR] Palestras e workshops realizados."),
+    text: l("[A COMPLETAR] Charlas y talleres realizados.", "[TO COMPLETE] Talks and workshops given.", "[A COMPLETAR] Palestras e workshops realizados."),
     status: "done",
   },
   {
@@ -223,7 +223,7 @@ export const safety = {
 export type Testimonial = {
   name: string;
   city: string;
-  procedure: string;
+  procedure: L;
   text: L;
   photo?: Media;
   /** true = contenido de demostración. Se muestra con etiqueta PLACEHOLDER. */
@@ -237,10 +237,10 @@ const PH_TEXT = l(
 );
 
 export const testimonials: Testimonial[] = [
-  { name: "—", city: "—", procedure: "Tongue Split", text: PH_TEXT, placeholder: true },
-  { name: "—", city: "—", procedure: "Scarification", text: PH_TEXT, placeholder: true },
-  { name: "—", city: "—", procedure: "Implants", text: PH_TEXT, placeholder: true },
-  { name: "—", city: "—", procedure: "Ear Pointing", text: PH_TEXT, placeholder: true },
+  { name: "—", city: "—", procedure: l("Lengua bífida", "Tongue Split", "Língua bifurcada"), text: PH_TEXT, placeholder: true },
+  { name: "—", city: "—", procedure: l("Escarificación", "Scarification", "Escarificação"), text: PH_TEXT, placeholder: true },
+  { name: "—", city: "—", procedure: l("Implantes", "Implants", "Implantes"), text: PH_TEXT, placeholder: true },
+  { name: "—", city: "—", procedure: l("Orejas en punta", "Ear Pointing", "Orelhas pontudas"), text: PH_TEXT, placeholder: true },
 ];
 
 export type PressItem = {

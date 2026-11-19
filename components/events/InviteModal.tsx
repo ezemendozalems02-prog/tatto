@@ -44,7 +44,7 @@ export default function InviteModal({ open, onClose }: { open: boolean; onClose:
   };
 
   return (
-    <Modal open={open} onClose={close} label="Invite FROZZ to your event">
+    <Modal open={open} onClose={close} label={t.events.cta}>
       <div className="p-6 pt-20 md:p-12 md:pt-16">
         <p className="label-red">{i.kicker}</p>
         <h2 className="display mt-4 text-[clamp(2.6rem,7vw,4.6rem)] leading-[0.9]">

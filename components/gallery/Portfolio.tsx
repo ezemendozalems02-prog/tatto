@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import Photo from "@/components/ui/Photo";
 import SectionHead from "@/components/ui/SectionHead";
 import { workFilters, works, type Work, type WorkCategory } from "@/data/portfolio";
+import type { L } from "@/lib/i18n";
 import { site } from "@/data/site";
 import { cn, pad2 } from "@/lib/utils";
 import Lightbox from "./Lightbox";
@@ -18,12 +19,12 @@ const aspect: Record<Work["shape"], string> = {
   square: "aspect-square",
 };
 
-export const categoryLabel = (c: WorkCategory) => workFilters.find((f) => f.id === c)?.label ?? c;
+export const categoryLabel = (c: WorkCategory): L | string => workFilters.find((f) => f.id === c)?.label ?? c;
 
 export default function Portfolio() {
   const [filter, setFilter] = useState<(typeof workFilters)[number]["id"]>("all");
   const [open, setOpen] = useState<number | null>(null);
-  const { t } = useLocale();
+  const { t, tr } = useLocale();
 
   const list = useMemo(() => (filter === "all" ? works : works.filter((w) => w.category === filter)), [filter]);
   const count = (id: string) => (id === "all" ? works.length : works.filter((w) => w.category === id).length);
@@ -32,10 +33,9 @@ export default function Portfolio() {
     <section id="works" className="relative bg-ink py-28 md:py-44">
       <div className="container-x">
         <SectionHead
-          index="04"
-          label="Portfolio — Selected works"
-          title={["Selected", { text: "Works", className: "pl-[12vw] text-outline" }]}
-          aside={<p className="display text-2xl leading-tight md:text-3xl">No limits.<br />No rules.<br /><span className="text-blood-hot">Just art.</span></p>}
+          label={t.works.label}
+          title={[t.works.title[0], { text: t.works.title[1], className: "pl-[12vw] text-outline" }]}
+          aside={<p className="display text-2xl leading-tight md:text-3xl">{t.works.aside[0]}<br />{t.works.aside[1]}<br /><span className="text-blood-hot">{t.works.aside[2]}</span></p>}
         />
 
         {/* Filtros */}
@@ -56,7 +56,7 @@ export default function Portfolio() {
                 >
                   {on && <motion.span layoutId="filter-bg" className="absolute inset-0 border border-blood bg-blood/10" transition={{ type: "spring", stiffness: 400, damping: 34 }} />}
                   <span className="relative">
-                    {f.label} <sup className="ml-0.5 text-[8px] text-blood-hot">{pad2(count(f.id))}</sup>
+                    {tr(f.label)} <sup className="ml-0.5 text-[8px] text-blood-hot">{pad2(count(f.id))}</sup>
                   </span>
                 </button>
               );
@@ -81,8 +81,8 @@ export default function Portfolio() {
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: Math.min(i * 0.05, 0.35) }}
                 onClick={() => setOpen(i)}
                 className="group relative mb-4 block w-full break-inside-avoid text-left md:mb-6"
-                data-cursor="View"
-                aria-label={`${t.works.view} ${w.title}`}
+                data-cursor={t.works.view}
+                aria-label={`${t.works.view} ${tr(w.title)}`}
               >
                 <div className={cn("relative w-full overflow-hidden", aspect[w.shape])}>
                   <div className="absolute inset-0 transition-transform duration-[1.2s] ease-out group-hover:scale-[1.07]">
@@ -94,8 +94,8 @@ export default function Portfolio() {
                   )}
                   <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-3 transition-all duration-500 md:translate-y-3 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
                     <div>
-                      <p className="label-red">{categoryLabel(w.category)}</p>
-                      <p className="display mt-1 text-2xl leading-none">{w.title}</p>
+                      <p className="label-red">{tr(categoryLabel(w.category))}</p>
+                      <p className="display mt-1 text-2xl leading-none">{tr(w.title)}</p>
                     </div>
                     <span className="display text-sm text-bone/60">{w.id.replace("w", "")}</span>
                   </div>

@@ -31,7 +31,7 @@ npm run typecheck  # chequeo de TypeScript
 
 El sitio está en **español, inglés y portugués**: `/es`, `/en`, `/pt`.
 
-- Al entrar a `/`, el middleware elige el idioma según el navegador (o la última elección del visitante, guardada en una cookie).
+- Al entrar a `/`, `app/page.tsx` elige el idioma según el navegador (o la última elección del visitante, guardada en una cookie).
 - El selector ES / EN / PT está en la navbar, el menú mobile y el footer, y conserva la sección actual.
 - Los textos traducibles usan `l("español", "english", "português")`. TypeScript marca cualquier traducción faltante.
 - Los titulares editoriales (FROZZ, "Selected Works", "Your body…") quedan en inglés en todos los idiomas: son la voz de la marca.
@@ -61,4 +61,8 @@ Para un video corto, usá `video: "/videos/archivo.mp4"` (y opcionalmente `poste
 - En `tour.ts`, los destinos con status `"projected"` nunca se presentan como realizados
   ni suman en los contadores.
 - La reserva es una **solicitud**: se envía por WhatsApp y queda pendiente de confirmación por el artista.
-# tatto
+
+## Deploy en Vercel
+
+`vercel.json` fuerza el framework **Next.js**. En el panel de Vercel (Settings → Build and Deployment) no debe haber
+overrides de Build Command ni de Output Directory.
